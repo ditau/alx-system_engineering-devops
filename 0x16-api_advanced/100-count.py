@@ -1,5 +1,3 @@
-import requests
-
 #!/usr/bin/python3
 """
 Function that queries the Reddit API and prints
