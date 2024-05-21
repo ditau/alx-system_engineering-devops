@@ -10,14 +10,11 @@ def number_of_subscribers(subreddit):
     headers = {
         "User-Agent": "alx api project by Mditau"
     }
-    try:
-        response = requests.get(url, headers=headers, allow_redirects=False)
-        # Check if the response status code is 200 (OK)
-        if response.status_code == 200:
-            data = response.json().get("data", {})
-            return data.get("subscribers", 0)
-        # Return 0 for invalid subreddits or other error responses
+    response = requests.get(url , headers=headers, allow_redirects=False)
+    if response.status_code == 404:
+        data = response.json()
+        subscribers = data.get('data').get('subscribers')
+        return subscribers
+    else:
         return 0
-    except requests.RequestException:
-        # Return 0 if there is any request exception (network issues, invalid JSON, etc.)
-        return 0
+   
