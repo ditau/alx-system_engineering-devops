@@ -12,9 +12,12 @@ def number_of_subscribers(subreddit):
     }
     try:
         response = requests.get(url, headers=headers, allow_redirects=False)
-        if response.status_code != 200:
-            return 0
-        results = response.json().get("data", {})
-        return results.get("subscribers", 0)
+        # Check if the response status code is 200 (OK)
+        if response.status_code == 200:
+            data = response.json().get("data", {})
+            return data.get("subscribers", 0)
+        # Return 0 for invalid subreddits or other error responses
+        return 0
     except requests.RequestException:
+        # Return 0 if there is any request exception (network issues, invalid JSON, etc.)
         return 0
